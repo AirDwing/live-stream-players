@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>all</title>
+  <style>
+    .box { display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; }
+    .player { width: 33%; height: 300px; position: relative }
+    .title { position: absolute; left: 0; top: 0; padding: 3px; z-index: 99999; color:red; }
+    video {max-width: 100%; max-height: 100%;}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="player">
+      <div class="title">chimee fls</div>
+      <div id="player1"></div>
+    </div>
+    <div class="player">
+        <div class="title">chimee hls</div>
+        <div id="player2"></div>
+    </div>
+    <div class="player">
+        <div class="title">flvjs</div>
+        <video id="player3"></video>
+    </div>
+    <div class="player">
+        <div class="title">tc flv</div>
+        <div id="player4"></div>
+    </div>
+    <div class="player">
+        <div class="title">tc hls</div>
+        <div id="player5"></div>
+    </div>
+    <div class="player">
+        <div class="title">tc rtpm</div>
+        <div id="player6"></div>
+    </div>
+  </div>
+  <script src="//unpkg.com/chimee/lib/index.min.js"></script>
+  <script src="//unpkg.com/chimee-kernel-flv/lib/index.min.js"></script>
+  <script src="//unpkg.com/chimee-kernel-hls/lib/index.min.js"></script>
+  <script src="//imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer.js"></script>
+  <script src="//unpkg.com/flv.js/dist/flv.min.js"></script>
+  <script src="config.js"></script>
+  <script>
+    const player1 = new Chimee({
+      wrapper: '#player1',
+      src:FLV,
+      autoplay: true,
+      isLive: true,
+      box: 'flv',
+      preset: {
+        flv: chimeeKernelFlv
+      }
+    });
+    const player2 = new Chimee({
+      wrapper: '#player2',
+      src: HLS,
+      autoplay: true,
+      isLive: true,
+      box: 'hls',
+      preset: {
+        hls: chimeeKernelHls
+      }
+    });
+    if (flvjs.isSupported()) {
+      var videoElement = document.getElementById('player3');
+      var flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          url: FLV
+      });
+      flvPlayer.attachMediaElement(videoElement);
+      flvPlayer.load();
+      flvPlayer.play();
+    }
+
+    var player4 = new TcPlayer('player4', {
+      "flv": FLV, //请替换成实际可用的播放地址
+      "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+      width: '100%',
+      height: '300',
+      live: true
+    });
+
+    var player5 = new TcPlayer('player5', {
+      "m3u8": HLS, //请替换成实际可用的播放地址
+      "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+      width: '100%',
+      height: '300',
+      live: true
+    });
+
+    var player6 = new TcPlayer('player6', {
+      rtmp: RTMP, //请替换成实际可用的播放地址
+      autoplay : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+      width: '100%',
+      height: '300',
+      live: true
+    });
+  </script>
+</body>
+</html>
